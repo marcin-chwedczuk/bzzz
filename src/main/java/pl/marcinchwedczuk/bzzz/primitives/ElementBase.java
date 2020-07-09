@@ -19,4 +19,17 @@ public abstract class ElementBase {
     protected final Simulator simulator() {
         return simulator;
     }
+
+    protected long propagationDelay() {
+        return 0;
+    }
+
+    protected final void scheduleWithPropagationDelay(Runnable action) {
+        simulator().schedule(
+            propagationDelay(), componentId(), action);
+    }
+
+    protected final void scheduleInitialization(Runnable action) {
+        simulator().schedule(0, componentId().extend("::init"), action);
+    }
 }

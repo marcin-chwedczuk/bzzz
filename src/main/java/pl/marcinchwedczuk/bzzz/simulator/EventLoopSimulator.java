@@ -4,39 +4,39 @@ import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 
 import java.util.PriorityQueue;
 
-public class EventLoopSimulator {
-    private static final PriorityQueue<Event> eventQueue = new PriorityQueue<>(
+public class EventLoopSimulator implements Simulator {
+    private final PriorityQueue<Event> eventQueue = new PriorityQueue<>(
             new EventsByTimestamp());
 
-    private static long time = 1_000_000;
+    private long time = 1_000_000;
 
-    public static long currentTime() {
-        return time;
-    }
-
-    public static void schedule(Event event) {
+    public void schedule(Event event) {
         eventQueue.add(event);
     }
 
-    public static void schedule(long delay,
-                                ComponentId source,
-                                Runnable action) {
+    public void schedule(long delay,
+                         ComponentId source,
+                         Runnable action) {
         schedule(new Event(source, time + delay, action));
     }
 
-    public static void runSingleStep() {
-        // TODO
-    }
-
-    public static void run() {
-        Event event;
-        while ((event = eventQueue.poll()) != null) {
-            time = event.fireAt;
-            event.fire();
+    public boolean runSingleStep() {
+        Event event = eventQueue.poll();
+        if (event == null) {
+            return false;
+        }
+        else {
+            event.action.run();
+            return true;
         }
     }
 
-    public static void scheduleAfterSteadyState(Runnable validate) {
-
+    public void run() {
+        Event event;
+        while ((event = eventQueue.poll()) != null) {
+            System.out.println("Running event from " + event.source);
+            time = event.fireAt;
+            event.fire();
+        }
     }
 }

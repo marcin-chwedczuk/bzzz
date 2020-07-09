@@ -21,6 +21,8 @@ public class Wire extends ElementBase {
         super(simulator, componentId);
     }
 
+    public LogicState logicState() { return state.logicState(); }
+
     public void applyState(LogicState newState, ComponentId sourceId) {
         onStateChanged(newState, sourceId);
     }
@@ -40,6 +42,10 @@ public class Wire extends ElementBase {
             connectedWires.onStateChanged(newLogicState, sourceId);
             this.state.detectShortCircuit();
         }
+    }
+
+    public void connectWith(Wire other) {
+        connect(this, other);
     }
 
     public static void connect(Wire wire1, Wire wire2) {
