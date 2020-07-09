@@ -1,9 +1,9 @@
 package pl.marcinchwedczuk.bzzz.simulator;
 
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
-import pl.marcinchwedczuk.bzzz.primitives.Probe;
-import pl.marcinchwedczuk.bzzz.primitives.Switch;
-import pl.marcinchwedczuk.bzzz.primitives.Wire;
+import pl.marcinchwedczuk.bzzz.primitives.passives.Probe;
+import pl.marcinchwedczuk.bzzz.primitives.passives.Switch;
+import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 
 public class CircuitBuilder {
     private final Simulator simulator;
@@ -18,7 +18,7 @@ public class CircuitBuilder {
 
     public Probe probeFor(Wire w) {
         var p = new Probe(simulator, ComponentId.of("probe-" + w.componentId()));
-        Wire.connect(w, p);
+        Wire.connect(w, p.input());
         return p;
     }
 

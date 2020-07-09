@@ -1,13 +1,14 @@
-package pl.marcinchwedczuk.bzzz.primitives;
+package pl.marcinchwedczuk.bzzz.primitives.wires;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
+import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
+import pl.marcinchwedczuk.bzzz.primitives.LogicState;
+import pl.marcinchwedczuk.bzzz.primitives.ShortCircuitDetectedException;
 import pl.marcinchwedczuk.bzzz.utils.X;
 
 import java.util.Objects;
-import java.util.Set;
 
-public class WireState {
+class WireState {
     public final ImmutableSet<ComponentId> highStateSources;
     public final ImmutableSet<ComponentId> lowStateSources;
 
@@ -22,21 +23,21 @@ public class WireState {
         this.lowStateSources = lowStateSources;
     }
 
-    public WireState withSourceStateChanged(LogicState state, ComponentId source) {
+    public WireState withChangedState(LogicState state, ComponentId source) {
         switch (state) {
-            case HIGH -> {
+            case ONE -> {
                 return new WireState(
                     X.add(highStateSources, source),
                     X.remove(lowStateSources, source));
             }
 
-            case LOW -> {
+            case ZERO -> {
                 return new WireState(
                         X.remove(highStateSources, source),
                         X.add(lowStateSources, source));
             }
 
-            case HIGH_IMPEDANCE -> {
+            case NOT_CONNECTED -> {
                 return new WireState(
                         X.remove(highStateSources, source),
                         X.remove(lowStateSources, source));
@@ -50,14 +51,14 @@ public class WireState {
         // Ignore short-circuits
 
         if (highStateSources.size() > 0) {
-            return LogicState.HIGH;
+            return LogicState.ONE;
         }
 
         if (lowStateSources.size() > 0) {
-            return LogicState.LOW;
+            return LogicState.ZERO;
         }
 
-        return LogicState.HIGH_IMPEDANCE;
+        return LogicState.NOT_CONNECTED;
     }
 
     public void detectShortCircuit() {

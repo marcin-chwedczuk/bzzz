@@ -1,13 +1,11 @@
 package pl.marcinchwedczuk.bzzz.primitives;
 
 import com.google.common.collect.ImmutableSet;
-import org.junit.Assert;
 import org.junit.Test;
+import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.CircuitBuilder;
 import pl.marcinchwedczuk.bzzz.simulator.DoNothingSimulator;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
-
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -39,16 +37,16 @@ public class WireTest {
         var aSwitch = builder.aSwitch("switch#1");
         Wire.connect(aSwitch.output(), input);
 
-        outputProbe.assertState(HIGH_IMPEDANCE);
+        outputProbe.assertState(NOT_CONNECTED);
 
         aSwitch.highState();
-        outputProbe.assertState(HIGH);
+        outputProbe.assertState(ONE);
 
         aSwitch.lowState();
-        outputProbe.assertState(LOW);
+        outputProbe.assertState(ZERO);
 
         aSwitch.off();
-        outputProbe.assertState(HIGH_IMPEDANCE);
+        outputProbe.assertState(NOT_CONNECTED);
     }
 
     @Test public void short_circuit_detection_test() {
