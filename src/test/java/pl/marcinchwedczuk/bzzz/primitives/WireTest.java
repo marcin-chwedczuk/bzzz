@@ -1,11 +1,16 @@
 package pl.marcinchwedczuk.bzzz.primitives;
 
+import com.google.common.collect.ImmutableSet;
+import org.junit.Assert;
 import org.junit.Test;
 import pl.marcinchwedczuk.bzzz.simulator.CircuitBuilder;
 import pl.marcinchwedczuk.bzzz.simulator.DoNothingSimulator;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
+import java.util.Set;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static pl.marcinchwedczuk.bzzz.primitives.LogicState.*;
 
 public class WireTest {
@@ -44,5 +49,31 @@ public class WireTest {
 
         aSwitch.off();
         outputProbe.assertState(HIGH_IMPEDANCE);
+    }
+
+    @Test public void short_circuit_detection_test() {
+        var wire = builder.wire("input");
+
+        var switch1 = builder.aSwitch("switch#1");
+        Wire.connect(switch1.output(), wire);
+
+        var switch2 = builder.aSwitch("switch#2");
+        Wire.connect(switch2.output(), wire);
+
+        switch1.highState();
+
+        try {
+            switch2.lowState();
+            fail("Short circuit not detected.");
+        }
+        catch (ShortCircuitDetectedException e) {
+            assertEquals(
+                    ImmutableSet.of(switch1.componentId()),
+                    e.highStateComponents);
+
+            assertEquals(
+                    ImmutableSet.of(switch2.componentId()),
+                    e.lowStateComponents);
+        }
     }
 }
