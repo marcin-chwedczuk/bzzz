@@ -1,13 +1,13 @@
 package pl.marcinchwedczuk.bzzz.primitives.gates;
 
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
-import pl.marcinchwedczuk.bzzz.primitives.ElementBase;
+import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.LogicState;
 import pl.marcinchwedczuk.bzzz.primitives.LogicStateChangedListener;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
-public class TriStateBuffer extends ElementBase {
+public class TriStateBuffer extends BaseElement {
     private final Wire input;
     private final Wire output;
     // Enabled input is inverted, low state means enabled

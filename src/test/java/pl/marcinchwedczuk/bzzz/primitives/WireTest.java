@@ -39,13 +39,13 @@ public class WireTest {
 
         outputProbe.assertState(NOT_CONNECTED);
 
-        aSwitch.highState();
+        aSwitch.one();
         outputProbe.assertState(ONE);
 
-        aSwitch.lowState();
+        aSwitch.zero();
         outputProbe.assertState(ZERO);
 
-        aSwitch.off();
+        aSwitch.notConnected();
         outputProbe.assertState(NOT_CONNECTED);
     }
 
@@ -58,10 +58,10 @@ public class WireTest {
         var switch2 = builder.aSwitch("switch#2");
         Wire.connect(switch2.output(), wire);
 
-        switch1.highState();
+        switch1.one();
 
         try {
-            switch2.lowState();
+            switch2.zero();
             fail("Short circuit not detected.");
         }
         catch (ShortCircuitDetectedException e) {

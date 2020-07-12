@@ -6,6 +6,8 @@
  * User Manual available at https://docs.gradle.org/6.5/userguide/tutorial_java_projects.html
  */
 
+val mainClass = "pl.marcinchwedczuk.bzzz.App"
+
 plugins {
     // Apply the java plugin to add support for Java
     java
@@ -31,4 +33,25 @@ dependencies {
 application {
     // Define the main class for the application.
     mainClassName = "pl.marcinchwedczuk.bzzz.App"
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "pl.marcinchwedczuk.bzzz.App"
+    }
+}
+
+
+tasks {
+    register("fatJar", Jar::class.java) {
+        archiveClassifier.set("all")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        manifest {
+            attributes("Main-Class" to mainClass)
+        }
+        from(configurations.runtimeClasspath.get()
+                .map { if (it.isDirectory) it else zipTree(it) })
+        val sourcesMain = sourceSets.main.get()
+        from(sourcesMain.output)
+    }
 }

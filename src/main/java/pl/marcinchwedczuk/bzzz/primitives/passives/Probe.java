@@ -1,13 +1,13 @@
 package pl.marcinchwedczuk.bzzz.primitives.passives;
 
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
-import pl.marcinchwedczuk.bzzz.primitives.ElementBase;
+import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.LogicState;
 import pl.marcinchwedczuk.bzzz.primitives.LogicStateChangedListener;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
-public class Probe extends ElementBase {
+public class Probe extends BaseElement {
     private final LogicStateChangedListener listener = new LogicStateChangedListener() {
         @Override
         public void onStateChanged(LogicState newState, ComponentId sourceId) {
@@ -29,6 +29,10 @@ public class Probe extends ElementBase {
 
     public LogicState state() { return logicState; }
     public Wire input() { return input; }
+
+    public void assertOne() { assertState(LogicState.ONE); }
+    public void assertZero() { assertState(LogicState.ZERO); }
+    public void assertNotConnected() { assertState(LogicState.NOT_CONNECTED); }
 
     public void assertState(LogicState expected) {
         if (state() != expected)

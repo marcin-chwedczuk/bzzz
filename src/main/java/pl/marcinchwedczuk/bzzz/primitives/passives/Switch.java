@@ -1,12 +1,12 @@
 package pl.marcinchwedczuk.bzzz.primitives.passives;
 
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
-import pl.marcinchwedczuk.bzzz.primitives.ElementBase;
+import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.LogicState;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
-public class Switch extends ElementBase {
+public class Switch extends BaseElement {
     private final Wire output;
 
     public Switch(Simulator simulator, ComponentId componentId) {
@@ -17,15 +17,15 @@ public class Switch extends ElementBase {
 
     public Wire output() { return output; }
 
-    public void highState() {
+    public void one() {
         output.applyState(LogicState.ONE, componentId());
     }
 
-    public void lowState() {
+    public void zero() {
         output.applyState(LogicState.ZERO, componentId());
     }
 
-    public void off() {
+    public void notConnected() {
         output.applyState(LogicState.NOT_CONNECTED, componentId());
     }
 }

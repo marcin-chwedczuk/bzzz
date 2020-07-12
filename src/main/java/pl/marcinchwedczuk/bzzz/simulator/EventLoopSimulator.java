@@ -3,20 +3,24 @@ package pl.marcinchwedczuk.bzzz.simulator;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 
 import java.util.PriorityQueue;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EventLoopSimulator implements Simulator {
     private final PriorityQueue<Event> eventQueue = new PriorityQueue<>(
             new EventsByTimestamp());
 
+    private final ThreadLocalRandom r = ThreadLocalRandom.current();
+
     private long time = 1_000_000;
 
-    public void schedule(Event event) {
+    private void schedule(Event event) {
         eventQueue.add(event);
     }
 
     public void schedule(long delay,
                          ComponentId source,
                          Runnable action) {
+
         schedule(new Event(source, time + delay, action));
     }
 

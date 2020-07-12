@@ -3,12 +3,11 @@
  */
 package pl.marcinchwedczuk.bzzz;
 
-public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+public class App {
+    public static void main(String[] args) throws InterruptedException {
+
     }
 }

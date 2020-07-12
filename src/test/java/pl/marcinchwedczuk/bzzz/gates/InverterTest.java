@@ -24,14 +24,14 @@ public class InverterTest {
         outputProbe.assertState(LogicState.ZERO);
 
         // After input is set to ZERO, output should go to ONE
-        inputSwitch.lowState();
+        inputSwitch.zero();
         // Output is not changed immediately
         outputProbe.assertState(LogicState.ZERO);
         simulator.run();
         outputProbe.assertState(LogicState.ONE);
 
         // After input is set to ONE, output should go to ZERO
-        inputSwitch.highState();
+        inputSwitch.one();
         outputProbe.assertState(LogicState.ONE);
         simulator.run();
         outputProbe.assertState(LogicState.ZERO);

@@ -1,10 +1,9 @@
 package pl.marcinchwedczuk.bzzz.primitives.wires;
 
 import pl.marcinchwedczuk.bzzz.primitives.*;
-import pl.marcinchwedczuk.bzzz.primitives.passives.Probe;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
-public class Wire extends ElementBase {
+public class Wire extends BaseElement {
 
     private final ConnectedWires connectedWires = new ConnectedWires();
 
