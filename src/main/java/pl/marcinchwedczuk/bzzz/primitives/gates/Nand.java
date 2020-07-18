@@ -27,21 +27,31 @@ public class Nand extends BaseElement {
         onStateChange(input1, this::updateOutput);
         onStateChange(input2, this::updateOutput);
 
-        scheduleInitialization(describeAs("schedule initialization"), this::updateOutput);
+        scheduleInitialization(describeAs("schedule initialization"), () -> {
+            LogicState input1LS = input1.logicState();
+            LogicState input2LS = input2.logicState();
+
+            LogicState initOutput = ttlNand(input1LS, input2LS);
+            output.applyState(initOutput, componentId());
+        });
     }
 
     private void updateOutput() {
-        LogicState input1LS = input1.logicState().toTTL();
-        LogicState input2LS = input2.logicState().toTTL();
+        LogicState input1LS = input1.logicState();
+        LogicState input2LS = input2.logicState();
 
-        LogicState outputLS = (input1LS.isOne() && input2LS.isOne())
-                ? LogicState.ZERO
-                : LogicState.ONE;
+        LogicState outputLS = ttlNand(input1LS, input2LS);
 
         String desc = describeAs("set output to %s because of inputs %s, %s", outputLS, input1LS, input2LS);
         scheduleWithPropagationDelay(desc, () -> {
             output.applyState(outputLS, componentId());
         });
+    }
+
+    private LogicState ttlNand(LogicState input1LS, LogicState input2LS) {
+        return (input1LS.toTTL().isOne() && input2LS.toTTL().isOne())
+                    ? LogicState.ZERO
+                    : LogicState.ONE;
     }
 
     public Wire input1() { return input1; }

@@ -29,23 +29,36 @@ public class Nand3 extends BaseElement {
         onStateChange(input2, this::updateOutput);
         onStateChange(input3, this::updateOutput);
 
-        scheduleInitialization(describeAs("schedule initialization"), this::updateOutput);
+        scheduleInitialization(describeAs("schedule initialization"), () -> {
+            LogicState input1LS = input1.logicState();
+            LogicState input2LS = input2.logicState();
+            LogicState input3LS = input3.logicState();
+
+            LogicState initOutput = ttlNand3(input1LS, input2LS, input3LS);
+            output.applyState(initOutput, componentId());
+        });
     }
 
     private void updateOutput() {
-        LogicState input1LS = input1.logicState().toTTL();
-        LogicState input2LS = input2.logicState().toTTL();
-        LogicState input3LS = input3.logicState().toTTL();
+        LogicState input1LS = input1.logicState();
+        LogicState input2LS = input2.logicState();
+        LogicState input3LS = input3.logicState();
 
-        LogicState outputLS = (input1LS.isOne() && input2LS.isOne() && input3LS.isOne())
-                ? LogicState.ZERO
-                : LogicState.ONE;
+        LogicState outputLS = ttlNand3(input1LS, input2LS, input3LS);
 
         String desc = describeAs("set output to %s because of inputs %s, %s, %s",
                 outputLS, input1LS, input2LS, input3LS);
         scheduleWithPropagationDelay(desc, () -> {
             output.applyState(outputLS, componentId());
         });
+    }
+
+    private LogicState ttlNand3(LogicState input1LS, LogicState input2LS, LogicState input3LS) {
+        return (input1LS.toTTL().isOne() &&
+                input2LS.toTTL().isOne() &&
+                input3LS.toTTL().isOne())
+                    ? LogicState.ZERO
+                    : LogicState.ONE;
     }
 
     public Wire input1() { return input1; }

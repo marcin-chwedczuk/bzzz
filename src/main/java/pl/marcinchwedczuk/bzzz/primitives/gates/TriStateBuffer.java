@@ -32,16 +32,14 @@ public class TriStateBuffer extends BaseElement {
             }
         });
 
-        enabledN.registerListener(new LogicStateChangedListener() {
-            @Override
-            public void onStateChanged(LogicState newState, ComponentId sourceId) {
-                onInputsChanged();
-            }
-        });
+        enabledN.registerListener((newState, sourceId) -> onInputsChanged());
 
-        scheduleInitialization(
-            describeAs("schedule initialization"),
-            this::onInputsChanged);
+        scheduleInitialization(describeAs("schedule initialization"), () -> {
+            LogicState initOutput = ttlTriState(
+                    enabledN.logicState(), input.logicState());
+
+            output.applyState(initOutput, componentId());
+        });
     }
 
     private void onInputsChanged() {
@@ -59,6 +57,15 @@ public class TriStateBuffer extends BaseElement {
                     describeAs("disconnecting output (input is %s)", inputLS), () -> {
                 output.applyState(LogicState.NOT_CONNECTED, componentId());
             });
+        }
+    }
+
+    private static LogicState ttlTriState(LogicState enabled, LogicState input) {
+        if (enabled.isZero()) {
+            return input.toTTL();
+        }
+        else {
+            return LogicState.NOT_CONNECTED;
         }
     }
 

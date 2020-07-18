@@ -8,10 +8,11 @@ public class EventQueueTest {
 
     @Test public void works() {
         var queue = new EventQueue();
+        var t = queue.currentTime();
 
-        var e1 = EventProbe.fromFiresAtAndSource(100, "event_1");
-        var e2 = EventProbe.fromFiresAtAndSource(100, "event_2");
-        var e3 = EventProbe.fromFiresAtAndSource(200, "event_3");
+        var e1 = EventProbe.fromFiresAtAndSource(100 + t, "event_1");
+        var e2 = EventProbe.fromFiresAtAndSource(100 + t, "event_2");
+        var e3 = EventProbe.fromFiresAtAndSource(200 + t, "event_3");
 
         queue.schedule(e1.event);
         queue.schedule(e2.event);
@@ -32,9 +33,10 @@ public class EventQueueTest {
 
     @Test public void later_event_overrides_earlier() {
         var queue = new EventQueue();
+        var t = queue.currentTime();
 
-        var e1 = EventProbe.fromFiresAtAndSource(100, "event_1");
-        var e2 = EventProbe.fromFiresAtAndSource(100, "event_1");
+        var e1 = EventProbe.fromFiresAtAndSource(100 + t, "event_1");
+        var e2 = EventProbe.fromFiresAtAndSource(100 + t, "event_1");
 
         queue.schedule(e1.event);
         queue.schedule(e2.event);

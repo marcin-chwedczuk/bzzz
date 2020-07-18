@@ -23,27 +23,24 @@ public class Inverter extends BaseElement {
         input = new Wire(simulator, componentId.extend("inputPin"));
         output = new Wire(simulator, componentId.extend("outputPin"));
 
-        input.registerListener(new LogicStateChangedListener() {
-            @Override
-            public void onStateChanged(LogicState newState, ComponentId sourceId) {
-                onInputChanged(newState);
-            }
-        });
+        input.registerListener((newState, sourceId) -> onInputChanged());
 
         scheduleInitialization(describeAs("schedule initialization"), () -> {
-            onInputChanged(input.logicState());
+            LogicState initialOutput = ttlInvert(input.logicState());
+            output.applyState(initialOutput, componentId());
         });
     }
 
-    private void onInputChanged(LogicState newInput) {
-        LogicState newOutput = switch (newInput) {
-            case ONE, NOT_CONNECTED -> LogicState.ZERO;
-            case ZERO -> LogicState.ONE;
-        };
+    private void onInputChanged() {
+        LogicState newOutput = ttlInvert(input.logicState());
 
         scheduleWithPropagationDelay(describeAs("set output to %s", newOutput), () -> {
             output.applyState(newOutput, componentId());
         });
+    }
+
+    private LogicState ttlInvert(LogicState input) {
+        return input.toTTL().reverse();
     }
 
     public Wire input() { return input; }
