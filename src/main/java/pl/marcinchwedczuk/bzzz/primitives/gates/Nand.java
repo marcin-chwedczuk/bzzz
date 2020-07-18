@@ -27,7 +27,7 @@ public class Nand extends BaseElement {
         onStateChange(input1, this::updateOutput);
         onStateChange(input2, this::updateOutput);
 
-        scheduleInitialization(this::updateOutput);
+        scheduleInitialization(describeAs("schedule initialization"), this::updateOutput);
     }
 
     private void updateOutput() {
@@ -38,7 +38,8 @@ public class Nand extends BaseElement {
                 ? LogicState.ZERO
                 : LogicState.ONE;
 
-        scheduleWithPropagationDelay(() -> {
+        String desc = describeAs("set output to %s because of inputs %s, %s", outputLS, input1LS, input2LS);
+        scheduleWithPropagationDelay(desc, () -> {
             output.applyState(outputLS, componentId());
         });
     }

@@ -12,12 +12,16 @@ public class Probe extends BaseElement {
         @Override
         public void onStateChanged(LogicState newState, ComponentId sourceId) {
             logicState = newState;
-            System.out.printf("PROBE: %s NEW STATE: %s%n", componentId(), state());
+
+            if (verbose) {
+                System.out.printf("PROBE: %s NEW STATE: %s%n", componentId(), state());
+            }
         }
     };
 
     private final Wire input;
 
+    private boolean verbose = false;
     private LogicState logicState = LogicState.NOT_CONNECTED;
 
     public Probe(Simulator simulator, ComponentId componentId) {
@@ -29,6 +33,8 @@ public class Probe extends BaseElement {
 
     public LogicState state() { return logicState; }
     public Wire input() { return input; }
+
+    public void logStateChanges() { verbose = true; }
 
     public void assertOne() { assertState(LogicState.ONE); }
     public void assertZero() { assertState(LogicState.ZERO); }

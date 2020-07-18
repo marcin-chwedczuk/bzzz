@@ -30,13 +30,24 @@ public abstract class BaseElement {
         return 0;
     }
 
-    protected final void scheduleWithPropagationDelay(Runnable action) {
+    protected final void scheduleWithPropagationDelay(String description, Runnable action) {
         simulator().schedule(
-            propagationDelay(), componentId(), action);
+            propagationDelay(), componentId(), description, action);
     }
 
-    protected final void scheduleInitialization(Runnable action) {
-        simulator().schedule(0, componentId().extend("::init"), action);
+    protected final void scheduleInitialization(String description, Runnable action) {
+        simulator().schedule(
+                0,
+                componentId().extend("::init"),
+                description,
+                action);
+    }
+
+    protected String describeAs(String description, Object... args) {
+        return String.format("%s: %s: %s",
+                componentId(),
+                this.getClass().getSimpleName(),
+                String.format(description, args));
     }
 
     protected static void onStateChange(Wire w,

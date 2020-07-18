@@ -30,7 +30,7 @@ public class Inverter extends BaseElement {
             }
         });
 
-        scheduleInitialization(() -> {
+        scheduleInitialization(describeAs("schedule initialization"), () -> {
             onInputChanged(input.logicState());
         });
     }
@@ -41,7 +41,7 @@ public class Inverter extends BaseElement {
             case ZERO -> LogicState.ONE;
         };
 
-        scheduleWithPropagationDelay(() -> {
+        scheduleWithPropagationDelay(describeAs("set output to %s", newOutput), () -> {
             output.applyState(newOutput, componentId());
         });
     }

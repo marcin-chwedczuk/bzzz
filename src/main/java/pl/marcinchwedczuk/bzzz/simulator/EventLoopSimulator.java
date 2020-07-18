@@ -6,22 +6,22 @@ import java.util.PriorityQueue;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EventLoopSimulator implements Simulator {
-    private final PriorityQueue<Event> eventQueue = new PriorityQueue<>(
-            new EventsByTimestamp());
+    private final EventQueue eventQueue = new EventQueue();
 
     private final ThreadLocalRandom r = ThreadLocalRandom.current();
 
-    private long time = 1_000_000;
-
     private void schedule(Event event) {
-        eventQueue.add(event);
+        eventQueue.schedule(event);
     }
 
     public void schedule(long delay,
                          ComponentId source,
+                         String description,
                          Runnable action) {
 
-        schedule(new Event(source, time + delay, action));
+        schedule(new Event(source,
+                eventQueue.currentTime() + delay,
+                action, description));
     }
 
     public boolean runSingleStep() {
@@ -30,17 +30,41 @@ public class EventLoopSimulator implements Simulator {
             return false;
         }
         else {
+            System.out.println("T" + event.fireAt + ": " + event.description);
+
             event.action.run();
             return true;
         }
     }
 
-    public void run() {
-        Event event;
-        while ((event = eventQueue.poll()) != null) {
-            System.out.println("Running event from " + event.source);
-            time = event.fireAt;
-            event.fire();
+    @Override
+    public void run(int maxSteps) {
+        run(maxSteps, "run(" + maxSteps + ") called.");
+    }
+
+    @Override
+    public void run(int maxSteps, String description) {
+        System.out.println("SIMULATOR: " + description);
+
+        for (int i = 0; i < maxSteps; i++) {
+            runSingleStep();
         }
+    }
+
+    @Override
+    public void run() {
+        run("run() called");
+    }
+
+    public void run(String description) {
+        System.out.println("SIMULATOR: " + description);
+
+        while (runSingleStep())
+            ;
+    }
+
+    @Override
+    public long time() {
+        return eventQueue.currentTime();
     }
 }

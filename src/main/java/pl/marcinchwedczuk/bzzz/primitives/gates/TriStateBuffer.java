@@ -39,10 +39,9 @@ public class TriStateBuffer extends BaseElement {
             }
         });
 
-
-        scheduleInitialization(() -> {
-            onInputsChanged();
-        });
+        scheduleInitialization(
+            describeAs("schedule initialization"),
+            this::onInputsChanged);
     }
 
     private void onInputsChanged() {
@@ -50,12 +49,14 @@ public class TriStateBuffer extends BaseElement {
         LogicState inputLS = input.logicState();
 
         if (enabledLS == LogicState.ZERO) {
-            scheduleWithPropagationDelay(() -> {
+            scheduleWithPropagationDelay(
+                    describeAs("setting output to %s", inputLS), () -> {
                 output.applyState(inputLS, componentId());
             });
         }
         else {
-            scheduleWithPropagationDelay(() -> {
+            scheduleWithPropagationDelay(
+                    describeAs("disconnecting output (input is %s)", inputLS), () -> {
                 output.applyState(LogicState.NOT_CONNECTED, componentId());
             });
         }

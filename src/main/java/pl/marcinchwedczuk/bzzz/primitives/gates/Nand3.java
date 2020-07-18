@@ -29,7 +29,7 @@ public class Nand3 extends BaseElement {
         onStateChange(input2, this::updateOutput);
         onStateChange(input3, this::updateOutput);
 
-        scheduleInitialization(this::updateOutput);
+        scheduleInitialization(describeAs("schedule initialization"), this::updateOutput);
     }
 
     private void updateOutput() {
@@ -41,7 +41,9 @@ public class Nand3 extends BaseElement {
                 ? LogicState.ZERO
                 : LogicState.ONE;
 
-        scheduleWithPropagationDelay(() -> {
+        String desc = describeAs("set output to %s because of inputs %s, %s, %s",
+                outputLS, input1LS, input2LS, input3LS);
+        scheduleWithPropagationDelay(desc, () -> {
             output.applyState(outputLS, componentId());
         });
     }

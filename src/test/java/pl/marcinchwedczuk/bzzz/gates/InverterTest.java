@@ -16,24 +16,21 @@ public class InverterTest {
     @Test public void inverter_works() {
         Inverter inv = builder.inverter("inv");
         Probe outputProbe = builder.probeFor(inv.output());
-
         Switch inputSwitch = builder.switchFor(inv.input());
 
-        // after initialization output should be in LOW state
-        simulator.run();
+        simulator.run("initialize components");
         outputProbe.assertState(LogicState.ZERO);
 
-        // After input is set to ZERO, output should go to ONE
         inputSwitch.zero();
         // Output is not changed immediately
         outputProbe.assertState(LogicState.ZERO);
-        simulator.run();
+        simulator.run("input set to 0");
         outputProbe.assertState(LogicState.ONE);
 
         // After input is set to ONE, output should go to ZERO
         inputSwitch.one();
         outputProbe.assertState(LogicState.ONE);
-        simulator.run();
+        simulator.run("input set to 1");
         outputProbe.assertState(LogicState.ZERO);
     }
 }

@@ -15,6 +15,7 @@ public class Wire extends BaseElement {
     };
 
     private WireState state = new WireState();
+    private long lastStateChangeTime = -1;
 
     public Wire(Simulator simulator, ComponentId componentId) {
         super(simulator, componentId);
@@ -36,7 +37,14 @@ public class Wire extends BaseElement {
                 .withChangedState(newLogicState, sourceId);
 
         if (!oldState.equals(newState)) {
+            if (simulator().time() == lastStateChangeTime) {
+                // Two changes in same time frame
+                throw new RuntimeException(
+                    "Two state changes in the same time frame on Wire: " + componentId() +
+                        "previous state: " + oldState + ", new state: " + newState);
+            }
             this.state = newState;
+            this.lastStateChangeTime = simulator().time();
 
             connectedWires.onStateChanged(newLogicState, sourceId);
             this.state.detectShortCircuit();

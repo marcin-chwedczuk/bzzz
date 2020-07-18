@@ -73,6 +73,26 @@ class WireState {
     }
 
     @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(logicState());
+
+        if (!highStateSources.isEmpty()) {
+            stringBuilder.append("(high=")
+                .append(highStateSources.toString())
+                .append(")");
+        }
+
+        if (!lowStateSources.isEmpty()) {
+            stringBuilder.append("(low=")
+                    .append(highStateSources.toString())
+                    .append(")");
+        }
+
+        return stringBuilder.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

@@ -29,7 +29,7 @@ public class Buffer extends BaseElement {
             }
         });
 
-        scheduleInitialization(() -> {
+        scheduleInitialization(describeAs("schedule initialization"), () -> {
             onInputChanged(input.logicState());
         });
     }
@@ -40,7 +40,7 @@ public class Buffer extends BaseElement {
             case ZERO -> LogicState.ZERO;
         };
 
-        scheduleWithPropagationDelay(() -> {
+        scheduleWithPropagationDelay(describeAs("set output to %s", newOutput), () -> {
             output.applyState(newOutput, componentId());
         });
     }

@@ -21,4 +21,12 @@ public enum LogicState {
             case ZERO -> LogicState.ZERO;
         };
     }
+
+    public LogicState reverse() {
+        return switch (this) {
+            case ONE -> ZERO;
+            case ZERO -> ONE;
+            case NOT_CONNECTED -> NOT_CONNECTED;
+        };
+    }
 }

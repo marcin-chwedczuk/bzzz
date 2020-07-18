@@ -20,11 +20,14 @@ public class DFlipFlopTest {
         var dSwitch = builder.switchFor(rs.d());
         var clockSwitch = builder.switchFor(rs.clock());
 
+        clockSwitch.zero();
+        // Initialize
+        simulator.run(100, "initialize");
+
         // Set one
         dSwitch.one();
         clockSwitch.one();
 
-        // Initialize
-        simulator.run();
+        simulator.run(100, "set d=1, clock raisingEDGE");
     }
 }
