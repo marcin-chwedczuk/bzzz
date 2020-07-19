@@ -85,7 +85,7 @@ class WireState {
 
         if (!lowStateSources.isEmpty()) {
             stringBuilder.append("(low=")
-                    .append(highStateSources.toString())
+                    .append(lowStateSources.toString())
                     .append(")");
         }
 

@@ -6,7 +6,7 @@ import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 import pl.marcinchwedczuk.bzzz.utils.Pipe;
 
 public class Logger {
-    private static LogFilter filter = LogFilters.noFilter();
+    public static LogFilter filter = LogFilters.noFilter();
 
     private final ComponentId owner;
     private final ComponentType type;

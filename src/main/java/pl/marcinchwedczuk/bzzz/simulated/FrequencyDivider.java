@@ -19,8 +19,8 @@ public class FrequencyDivider {
         var div8 = new DFlipFlop(builder, ComponentId.of("div8"));
         div8.d().connectWith(div8.qN());
 
-        div2.qN().connectWith(div4.clock());
-        div4.qN().connectWith(div8.clock());
+        div2.q().connectWith(div4.clock());
+        div4.q().connectWith(div8.clock());
 
         input = div2.clock();
         output = div8.q();

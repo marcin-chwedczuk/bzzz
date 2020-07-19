@@ -29,7 +29,7 @@ public class FrequencyDividerTest {
         var probe = builder.probeFor(divider.output());
         probe.logStateChanges();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 16; i++) {
             changeState(divider.input());
         }
     }
@@ -46,8 +46,8 @@ public class FrequencyDividerTest {
         var div8 = new DFlipFlop(builder, ComponentId.of("div8"));
         div8.d().connectWith(div8.qN());
 
-        div2.qN().connectWith(div4.clock());
-        div4.qN().connectWith(div8.clock());
+        div2.q().connectWith(div4.clock());
+        div4.q().connectWith(div8.clock());
         simulator.run("run()");
 
         var probe = builder.probeFor(div8.q());

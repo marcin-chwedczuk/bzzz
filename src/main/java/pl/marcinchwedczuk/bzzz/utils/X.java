@@ -4,6 +4,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 
 public class X {
+    public static int toInt(boolean b) {
+        return b ? 1 : 0;
+    }
 
     public static <E> ImmutableSet<E> add(ImmutableSet<E> set, E element) {
         if (set.contains(element)) return set;

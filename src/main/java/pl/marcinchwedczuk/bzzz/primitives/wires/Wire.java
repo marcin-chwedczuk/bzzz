@@ -49,7 +49,10 @@ public class Wire extends BaseElement {
 
             connectedWires.onStateChanged(newLogicState, sourceId);
             this.state.detectShortCircuit();
+
+            // System.out.println("WIRE " + componentId() + " NEW STATE: " + newState.logicState());
         }
+
     }
 
     public void connectWith(Wire other) {
