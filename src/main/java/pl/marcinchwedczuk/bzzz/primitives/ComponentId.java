@@ -3,7 +3,14 @@ package pl.marcinchwedczuk.bzzz.primitives;
 import java.util.Objects;
 
 public class ComponentId {
+    public static final ComponentId empty = of("");
+
+    private static final String SEPARATOR = "/";
+
     public static ComponentId of(String s) {
+        if (s.contains(SEPARATOR))
+            throw new IllegalArgumentException("path cannot contain separator character.");
+
         return new ComponentId(s);
     }
 
@@ -14,7 +21,26 @@ public class ComponentId {
     }
 
     public ComponentId extend(String part) {
-        return new ComponentId(path + "/" + part);
+        if (part.contains(SEPARATOR))
+            throw new IllegalArgumentException("path cannot contain separator character.");
+
+        return new ComponentId(path + SEPARATOR + part);
+    }
+
+    public ComponentId outputPin() {
+        return this.extend("outputPin");
+    }
+
+    public ComponentId inputPin() {
+        return this.extend("inputPin");
+    }
+
+    public ComponentId inputPin(int index) {
+        return this.extend("input" + index + "Pin");
+    }
+
+    public ComponentId enableNPin() {
+        return this.extend("enableNPin");
     }
 
     @Override

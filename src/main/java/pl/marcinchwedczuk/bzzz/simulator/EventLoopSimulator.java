@@ -1,27 +1,28 @@
 package pl.marcinchwedczuk.bzzz.simulator;
 
+import pl.marcinchwedczuk.bzzz.logger.Logger;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 
-import java.util.PriorityQueue;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EventLoopSimulator implements Simulator {
-    private final EventQueue eventQueue = new EventQueue();
+    private final ComponentId componentId = ComponentId.of("SIMULATOR");
+    private final ComponentType componentType = ComponentType.of(this.getClass());
 
-    private final ThreadLocalRandom r = ThreadLocalRandom.current();
+    private final Logger logger = new Logger(componentId, componentType);
+
+    private final EventQueue eventQueue = new EventQueue(logger);
+
 
     private void schedule(Event event) {
         eventQueue.schedule(event);
     }
 
-    public void schedule(long delay,
-                         ComponentId source,
-                         String description,
+    public void schedule(ComponentId source,
+                         Duration delay,
                          Runnable action) {
-
-        schedule(new Event(source,
-                eventQueue.currentTime() + delay,
-                action, description));
+        Instant fireAt = eventQueue.currentTime().add(delay);
+        schedule(new Event(source, fireAt, action));
     }
 
     public boolean runSingleStep() {
@@ -30,41 +31,33 @@ public class EventLoopSimulator implements Simulator {
             return false;
         }
         else {
-            System.out.println("T" + event.fireAt + ": " + event.description);
-
             event.action.run();
             return true;
         }
     }
 
     @Override
-    public void run(int maxSteps) {
-        run(maxSteps, "run(" + maxSteps + ") called.");
-    }
-
-    @Override
-    public void run(int maxSteps, String description) {
-        System.out.println("SIMULATOR: " + description);
+    public FiniteSimulationResult run(int maxSteps, String description) {
+        logger.log(description);
 
         for (int i = 0; i < maxSteps; i++) {
             runSingleStep();
         }
-    }
 
-    @Override
-    public void run() {
-        run("run() called");
+        return eventQueue.isEmpty()
+                ? FiniteSimulationResult.FINISHED
+                : FiniteSimulationResult.NOT_FINISHED;
     }
 
     public void run(String description) {
-        System.out.println("SIMULATOR: " + description);
+        logger.log(description);
 
         while (runSingleStep())
             ;
     }
 
     @Override
-    public long time() {
+    public Instant time() {
         return eventQueue.currentTime();
     }
 }

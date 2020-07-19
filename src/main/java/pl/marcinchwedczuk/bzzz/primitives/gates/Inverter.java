@@ -3,8 +3,8 @@ package pl.marcinchwedczuk.bzzz.primitives.gates;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.LogicState;
-import pl.marcinchwedczuk.bzzz.primitives.LogicStateChangedListener;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
+import pl.marcinchwedczuk.bzzz.simulator.Duration;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
 // Assumes TTL Logic not connected pin has high state
@@ -13,8 +13,8 @@ public class Inverter extends BaseElement {
     private final Wire output;
 
     @Override
-    protected long propagationDelay() {
-        return 100;
+    protected Duration propagationDelay() {
+        return Duration.of(100);
     }
 
     public Inverter(Simulator simulator, ComponentId componentId) {
@@ -25,16 +25,19 @@ public class Inverter extends BaseElement {
 
         input.registerListener((newState, sourceId) -> onInputChanged());
 
-        scheduleInitialization(describeAs("schedule initialization"), () -> {
-            LogicState initialOutput = ttlInvert(input.logicState());
-            output.applyState(initialOutput, componentId());
+        scheduleInitialization(() -> {
+            LogicState inputLS = input().logicState();
+            LogicState outputLS = ttlInvert(inputLS);
+            logger.log("[init] set %s -> %s", inputLS, outputLS);
+            output.applyState(outputLS, componentId());
         });
     }
 
     private void onInputChanged() {
         LogicState newOutput = ttlInvert(input.logicState());
 
-        scheduleWithPropagationDelay(describeAs("set output to %s", newOutput), () -> {
+        scheduleWithPropagationDelay(() -> {
+            // describeAs("set output to %s", newOutput)
             output.applyState(newOutput, componentId());
         });
     }

@@ -4,6 +4,7 @@ import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 import pl.marcinchwedczuk.bzzz.primitives.LogicState;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
+import pl.marcinchwedczuk.bzzz.simulator.Duration;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
 public class IC555 extends BaseElement {
@@ -11,8 +12,8 @@ public class IC555 extends BaseElement {
 
     private int version = 1000;
     private boolean one = false;
-    private int onePulseWidth = 200;
-    private int zeroPulseWidth = 200;
+    private Duration onePulseWidth = Duration.of(200);
+    private Duration zeroPulseWidth = Duration.of(200);
 
     public IC555(Simulator simulator, ComponentId componentId) {
         super(simulator, componentId);
@@ -24,11 +25,7 @@ public class IC555 extends BaseElement {
     private void restart() {
         this.version++;
 
-        simulator().schedule(
-                1,
-                componentId(),
-                describeAs("restart generator"),
-                () -> this.run(version));
+        simulator().schedule(componentId(), Duration.of(1), () -> this.run(version));
     }
 
     private void run(int versionSnapshot) {
@@ -39,25 +36,17 @@ public class IC555 extends BaseElement {
 
         if (one) {
             output.applyState(LogicState.ONE, componentId());
-            simulator().schedule(
-                    onePulseWidth,
-                    componentId(),
-                    describeAs("set output to 1"),
-                    () -> run(versionSnapshot));
+            simulator().schedule(componentId(), onePulseWidth, () -> run(versionSnapshot));
         }
         else {
             output.applyState(LogicState.ZERO, componentId());
-            simulator().schedule(
-                    zeroPulseWidth,
-                    componentId(),
-                    describeAs("set output to 0"),
-                    () -> run(versionSnapshot));
+            simulator().schedule(componentId(), zeroPulseWidth, () -> run(versionSnapshot));
         }
 
         one = !one;
     }
 
-    public void squareWave(int pulseDuration) {
+    public void squareWave(Duration pulseDuration) {
         this.onePulseWidth = pulseDuration;
         this.zeroPulseWidth = pulseDuration;
         restart();

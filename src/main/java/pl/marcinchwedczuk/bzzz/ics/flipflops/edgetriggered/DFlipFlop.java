@@ -4,6 +4,11 @@ import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.CircuitBuilder;
 
+// D flip-flop without reset:
+// https://elprojects.blogspot.com/2011/01/positive-edge-d-flip-flop-using-6-nand.html
+//
+// With reset, see: docs/d-flip-flop-with-reset.png for schematic.
+//
 public class DFlipFlop {
     private final Wire q;
     private final Wire qN;

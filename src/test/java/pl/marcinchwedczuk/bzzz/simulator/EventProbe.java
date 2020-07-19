@@ -3,7 +3,7 @@ package pl.marcinchwedczuk.bzzz.simulator;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 
 class EventProbe {
-    public static EventProbe fromFiresAtAndSource(long fireAt, String name) {
+    public static EventProbe fromFiresAtAndSource(Instant fireAt, String name) {
         return new EventProbe(fireAt, name);
     }
 
@@ -11,7 +11,7 @@ class EventProbe {
     public final Event event;
     private boolean fired;
 
-    private EventProbe(long fireAt, String name) {
+    private EventProbe(Instant fireAt, String name) {
         this.name = name;
         this.event = new Event(
             ComponentId.of(name),
@@ -24,8 +24,7 @@ class EventProbe {
                     throw new RuntimeException(String.format(
                         "Event %s already fired!", name));
                 }
-            },
-            "Event from probe " + name);
+            });
     }
 
     public void assertFired() {

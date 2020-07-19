@@ -5,6 +5,7 @@ import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.LogicState;
 import pl.marcinchwedczuk.bzzz.primitives.LogicStateChangedListener;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
+import pl.marcinchwedczuk.bzzz.simulator.Duration;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
 public class TriStateBuffer extends BaseElement {
@@ -14,50 +15,42 @@ public class TriStateBuffer extends BaseElement {
     private final Wire enabledN;
 
     @Override
-    protected long propagationDelay() {
-        return 100;
+    protected Duration propagationDelay() {
+        return Duration.of(100);
     }
 
     public TriStateBuffer(Simulator simulator, ComponentId componentId) {
         super(simulator, componentId);
 
-        input = new Wire(simulator, componentId.extend("inputPin"));
-        output = new Wire(simulator, componentId.extend("outputPin"));
-        enabledN = new Wire(simulator, componentId.extend("enabledPin"));
+        input = new Wire(simulator, componentId.inputPin());
+        output = new Wire(simulator, componentId.outputPin());
+        enabledN = new Wire(simulator, componentId.enableNPin());
 
-        input.registerListener(new LogicStateChangedListener() {
-            @Override
-            public void onStateChanged(LogicState newState, ComponentId sourceId) {
-                onInputsChanged();
-            }
-        });
-
+        input.registerListener((newState, sourceId) -> onInputsChanged());
         enabledN.registerListener((newState, sourceId) -> onInputsChanged());
 
-        scheduleInitialization(describeAs("schedule initialization"), () -> {
-            LogicState initOutput = ttlTriState(
-                    enabledN.logicState(), input.logicState());
+        scheduleInitialization(() -> {
+            LogicState enabledNLS = enabledN.logicState();
+            LogicState inputLS = input.logicState();
 
-            output.applyState(initOutput, componentId());
+            LogicState outputLS = ttlTriState(enabledNLS, inputLS);
+
+            logger.log("[init] enabledN: %s, %s -> %s",
+                    enabledNLS, inputLS, outputLS);
+            output.applyState(outputLS, componentId());
         });
     }
 
     private void onInputsChanged() {
-        LogicState enabledLS = enabledN.logicState();
+        LogicState enabledNLS = enabledN.logicState();
         LogicState inputLS = input.logicState();
 
-        if (enabledLS == LogicState.ZERO) {
-            scheduleWithPropagationDelay(
-                    describeAs("setting output to %s", inputLS), () -> {
-                output.applyState(inputLS, componentId());
-            });
-        }
-        else {
-            scheduleWithPropagationDelay(
-                    describeAs("disconnecting output (input is %s)", inputLS), () -> {
-                output.applyState(LogicState.NOT_CONNECTED, componentId());
-            });
-        }
+        LogicState outputLS = ttlTriState(enabledNLS, inputLS);
+
+        scheduleWithPropagationDelay(() -> {
+            logger.log("enabledN: %s, %s -> %s", enabledNLS, inputLS, outputLS);
+            output.applyState(outputLS, componentId());
+        });
     }
 
     private static LogicState ttlTriState(LogicState enabled, LogicState input) {

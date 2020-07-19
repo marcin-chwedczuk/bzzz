@@ -17,7 +17,7 @@ public class RSFlipFlopNTest {
         0	1	Q = 1
         1	0	Q = 0
         1	1	No change; random initial
-         */
+        */
         var rs = new RSFlipFlopN(builder, ComponentId.of("RS"));
         var qProbe = builder.probeFor(rs.q());
         var qNProbe = builder.probeFor(rs.qN());
@@ -30,7 +30,7 @@ public class RSFlipFlopNTest {
         rSwitch.one();
 
         // Initialize
-        simulator.run();
+        simulator.run("");
 
         // Should be random - but in our case we always get
         // deterministic results...
@@ -41,7 +41,7 @@ public class RSFlipFlopNTest {
         sSwitch.zero();
         rSwitch.one();
 
-        simulator.run();
+        simulator.run("");
 
         qProbe.assertOne();
         qNProbe.assertZero();
@@ -50,7 +50,7 @@ public class RSFlipFlopNTest {
         rSwitch.one();
         sSwitch.one();
 
-        simulator.run();
+        simulator.run("");
 
         qProbe.assertOne();
         qNProbe.assertZero();

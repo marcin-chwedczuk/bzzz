@@ -10,26 +10,20 @@ public class FrequencyDivider {
     private final Wire output;
 
     public FrequencyDivider(CircuitBuilder builder, ComponentId componentId) {
-        var dFlipFlop = new DFlipFlop(builder, ComponentId.of("div2"));
-        dFlipFlop.d().connectWith(dFlipFlop.qN());
+        var div2 = new DFlipFlop(builder, ComponentId.of("div2"));
+        div2.d().connectWith(div2.qN());
 
-        var dFlipFlop2 = new DFlipFlop(builder, ComponentId.of("div2-2"));
-        dFlipFlop2.d().connectWith(dFlipFlop2.qN());
+        var div4 = new DFlipFlop(builder, ComponentId.of("div4"));
+        div4.d().connectWith(div4.qN());
 
-        var dFlipFlop3 = new DFlipFlop(builder, ComponentId.of("div2-2"));
-        dFlipFlop3.d().connectWith(dFlipFlop3.qN());
+        var div8 = new DFlipFlop(builder, ComponentId.of("div8"));
+        div8.d().connectWith(div8.qN());
 
-        dFlipFlop.q().connectWith(dFlipFlop2.clock());
-        dFlipFlop2.q().connectWith(dFlipFlop3.clock());
+        div2.qN().connectWith(div4.clock());
+        div4.qN().connectWith(div8.clock());
 
-        input = dFlipFlop.clock();
-        output = dFlipFlop3.q();
-    }
-
-    private DFlipFlop stage(CircuitBuilder builder, ComponentId componentId) {
-        var dFlipFlop = new DFlipFlop(builder, componentId);
-        dFlipFlop.d().connectWith(dFlipFlop.qN());
-        return dFlipFlop;
+        input = div2.clock();
+        output = div8.q();
     }
 
     public Wire input() { return input; }
