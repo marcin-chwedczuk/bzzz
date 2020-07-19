@@ -13,10 +13,11 @@ import static pl.marcinchwedczuk.bzzz.primitives.LogicState.*;
 
 public class WireTest {
 
-    private final Simulator simulator = new DoNothingSimulator();
+    private final DoNothingSimulator simulator = new DoNothingSimulator();
     private final CircuitBuilder builder = new CircuitBuilder(simulator);
 
     @Test public void broadcast_test() {
+        // Given
         var input = builder.wire("input");
 
         var leftUp = builder.wire("leftUp");
@@ -37,19 +38,24 @@ public class WireTest {
         var aSwitch = builder.aSwitch("switch#1");
         Wire.connect(aSwitch.output(), input);
 
+        // When
         outputProbe.assertState(NOT_CONNECTED);
 
+        simulator.advanceTime();
         aSwitch.one();
         outputProbe.assertState(ONE);
 
+        simulator.advanceTime();
         aSwitch.zero();
         outputProbe.assertState(ZERO);
 
+        simulator.advanceTime();
         aSwitch.notConnected();
         outputProbe.assertState(NOT_CONNECTED);
     }
 
     @Test public void short_circuit_detection_test() {
+        // Given
         var wire = builder.wire("input");
 
         var switch1 = builder.aSwitch("switch#1");
@@ -58,9 +64,11 @@ public class WireTest {
         var switch2 = builder.aSwitch("switch#2");
         Wire.connect(switch2.output(), wire);
 
+        // When
         switch1.one();
 
         try {
+            simulator.advanceTime();
             switch2.zero();
             fail("Short circuit not detected.");
         }

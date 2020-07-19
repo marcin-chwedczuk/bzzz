@@ -32,25 +32,27 @@ public class RSFlipFlopNTest {
         // Initialize
         simulator.run();
 
-        qProbe.assertOne();
-        qNProbe.assertZero();
+        // Should be random - but in our case we always get
+        // deterministic results...
+        qProbe.assertZero();
+        qNProbe.assertOne();
 
-        // Set zero
+        // Set ONE
         sSwitch.zero();
         rSwitch.one();
 
         simulator.run();
 
-        qProbe.assertZero();
-        qNProbe.assertOne();
+        qProbe.assertOne();
+        qNProbe.assertZero();
 
         // Preserve value
-        rSwitch.zero();
-        sSwitch.zero();
+        rSwitch.one();
+        sSwitch.one();
 
         simulator.run();
 
-        qProbe.assertZero();
-        qNProbe.assertOne();
+        qProbe.assertOne();
+        qNProbe.assertZero();
     }
 }
