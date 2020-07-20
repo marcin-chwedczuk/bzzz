@@ -10,7 +10,7 @@ import pl.marcinchwedczuk.bzzz.primitives.passives.Switch;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 
 public class CircuitBuilder {
-    private final Simulator simulator;
+    public final Simulator simulator;
 
     public CircuitBuilder(Simulator simulator) {
         this.simulator = simulator;

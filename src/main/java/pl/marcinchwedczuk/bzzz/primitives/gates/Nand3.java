@@ -8,10 +8,10 @@ import pl.marcinchwedczuk.bzzz.simulator.Duration;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
 public class Nand3 extends BaseElement {
-    private final Wire input1;
-    private final Wire input2;
-    private final Wire input3;
-    private final Wire output;
+    public final Wire input1;
+    public final Wire input2;
+    public final Wire input3;
+    public final Wire output;
 
     @Override
     protected Duration propagationDelay() {

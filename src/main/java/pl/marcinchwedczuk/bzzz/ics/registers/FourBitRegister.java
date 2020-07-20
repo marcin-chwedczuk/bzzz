@@ -2,6 +2,7 @@ package pl.marcinchwedczuk.bzzz.ics.registers;
 
 import org.checkerframework.checker.units.qual.A;
 import pl.marcinchwedczuk.bzzz.ics.flipflops.edgetriggered.DFlipFlop;
+import pl.marcinchwedczuk.bzzz.ics.flipflops.edgetriggered.DFlipFlopAlt;
 import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 import pl.marcinchwedczuk.bzzz.primitives.gates.And;
@@ -67,9 +68,9 @@ public class FourBitRegister extends BaseElement {
         for (int i = 1; i <= 4; i++) {
             ComponentId bitId = componentId.extend("bit-" + i);
 
-            var dff = new DFlipFlop(builder, bitId.extend("dflipflop"));
+            var dff = new DFlipFlopAlt(builder, bitId.extend("dflipflop"));
             dff.clock.connectWith(clockN);
-            // dff.resetN.connectWith(clearN);
+            dff.resetN.connectWith(clearN);
 
             var qNInv = new Inverter(simulator, bitId.extend("d-qn-inv"));
             qNInv.input.connectWith(dff.qN);
