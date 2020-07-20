@@ -9,10 +9,10 @@ import pl.marcinchwedczuk.bzzz.simulator.Duration;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
 public class TriStateBuffer extends BaseElement {
-    private final Wire input;
-    private final Wire output;
+    public final Wire input;
+    public final Wire output;
     // Enabled input is inverted, low state means enabled
-    private final Wire enabledN;
+    public final Wire enabledN;
 
     @Override
     protected Duration propagationDelay() {

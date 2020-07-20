@@ -9,8 +9,8 @@ import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
 // Assumes TTL Logic not connected pin has high state
 public class Inverter extends BaseElement {
-    private final Wire input;
-    private final Wire output;
+    public final Wire input;
+    public final Wire output;
 
     @Override
     protected Duration propagationDelay() {
