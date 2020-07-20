@@ -69,7 +69,7 @@ public class FourBitRegister extends BaseElement {
 
             var dff = new DFlipFlop(builder, bitId.extend("dflipflop"));
             dff.clock.connectWith(clockN);
-            dff.resetN.connectWith(clearN);
+            // dff.resetN.connectWith(clearN);
 
             var qNInv = new Inverter(simulator, bitId.extend("d-qn-inv"));
             qNInv.input.connectWith(dff.qN);

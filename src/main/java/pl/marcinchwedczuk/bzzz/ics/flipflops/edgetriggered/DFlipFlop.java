@@ -44,8 +44,9 @@ public class DFlipFlop {
         bottomLatchNand1.output().connectWith(rsNand2.input2());
 
         // Reset
-        resetN = bottomLatchNand2.input3();
-        topLatchNand2.input3().connectWith(resetN);
+        resetN = null;
+        // resetN = bottomLatchNand2.input3();
+        // topLatchNand2.input3().connectWith(resetN);
     }
 
     public Wire clock() { return clock; }
