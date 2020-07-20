@@ -8,8 +8,8 @@ import pl.marcinchwedczuk.bzzz.simulator.Duration;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
 public class Buffer extends BaseElement {
-    private final Wire input;
-    private final Wire output;
+    public final Wire input;
+    public final Wire output;
 
     @Override
     protected Duration propagationDelay() {
