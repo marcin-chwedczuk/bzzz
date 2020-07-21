@@ -3,11 +3,10 @@
  */
 package pl.marcinchwedczuk.bzzz;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import pl.marcinchwedczuk.bzzz.gui.MainWindow;
 
 public class App {
     public static void main(String[] args) throws InterruptedException {
-
+        MainWindow.main(args);
     }
 }

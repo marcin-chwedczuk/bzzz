@@ -67,8 +67,6 @@ public class FourBitRegisterTest {
         var r = simulator.run(40000, "Register 4-bit init");
         assertEquals(FiniteSimulationResult.FINISHED, r);
 
-
-
         for (int i = 0; i < 50; i++) {
             LogicState tmp = r4.clock.logicState().reverse();
             r4.clock.applyState(tmp, test);
