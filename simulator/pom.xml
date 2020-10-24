@@ -6,11 +6,11 @@
     <artifactId>bzzz</artifactId>
     <groupId>pl.marcinchwedczuk.bzzz</groupId>
     <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <groupId>pl.marcinchwedczuk.bzzz.simulator</groupId>
   <artifactId>simulator</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <dependencies>
     <dependency>

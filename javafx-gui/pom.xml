@@ -7,11 +7,11 @@
         <artifactId>bzzz</artifactId>
         <groupId>pl.marcinchwedczuk.bzzz</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>pl.marcinchwedczuk.bzzz.javafx-gui</groupId>
     <artifactId>javafx-gui</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <build>
         <!-- Break Maven convention and allow FXML files in source code dirs. -->
@@ -26,16 +26,45 @@
 
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!--
+                <configuration>
+                    <compilerArgs>
+                        <arg>- -add-reads</arg>
+                        <arg>bzzz.javafx_gui=ALL-UNNAMED</arg>
+                    </compilerArgs>
+                </configuration>
+                -->
+            </plugin>
+
+            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <configuration>
+                    <release>${maven.compiler.release}</release>
+                    <jlinkImageName>bzzz-gui</jlinkImageName>
+                    <launcher>launcher</launcher>
+                    <!-- <mainClass>bzzz.javafx_gui/pl.marcinchwedczuk.bzzz.App</mainClass> -->
                     <mainClass>pl.marcinchwedczuk.bzzz.App</mainClass>
+                    <!--
+                    <options>
+                        <option>- -add-reads</option>
+                        <option>bzzz.javafx_gui=ALL-UNNAMED</option>
+                    </options>
+                    -->
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>pl.marcinchwedczuk.bzzz</groupId>
+            <artifactId>simulator</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>

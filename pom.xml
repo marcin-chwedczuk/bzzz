@@ -10,13 +10,16 @@
     <url>https://github.com/marcin-chwedczuk/bzzz</url>
 
     <modules>
-        <module>javafx-gui</module>
         <module>simulator</module>
+        <module>javafx-gui</module>
     </modules>
 
     <properties>
-        <maven.compiler.release>14</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Use JDK 14 -->
+        <maven.compiler.release>14</maven.compiler.release>
+        <javafx.version>15.0.1</javafx.version>
     </properties>
 
     <build>
@@ -24,6 +27,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <release>${maven.compiler.release}</release>
+                </configuration>
             </plugin>
         </plugins>
 
@@ -45,15 +51,18 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- MODULES -->
+
+            <!-- LIBRARIES -->
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-controls</artifactId>
-                <version>15.0.1</version>
+                <version>${javafx.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-fxml</artifactId>
-                <version>15.0.1</version>
+                <version>${javafx.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>

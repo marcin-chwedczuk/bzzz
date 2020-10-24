@@ -1,6 +1,5 @@
 package pl.marcinchwedczuk.bzzz.ics.registers;
 
-import org.checkerframework.checker.units.qual.A;
 import pl.marcinchwedczuk.bzzz.ics.flipflops.edgetriggered.DFlipFlop;
 import pl.marcinchwedczuk.bzzz.ics.flipflops.edgetriggered.DFlipFlopAlt;
 import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
