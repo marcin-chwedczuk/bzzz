@@ -1,4 +1,4 @@
-package pl.marcinchwedczuk.bzzz.javafx.util;
+package pl.marcinchwedczuk.bzzz.util;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

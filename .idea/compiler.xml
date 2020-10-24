@@ -6,9 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="bzzz" />
+        <module name="simulator" />
+        <module name="javafx-gui" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="14" />
+    <bytecodeTargetLevel target="14">
+      <module name="gui" target="14" />
+    </bytecodeTargetLevel>
   </component>
 </project>

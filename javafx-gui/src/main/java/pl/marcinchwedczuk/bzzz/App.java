@@ -1,11 +1,11 @@
-package pl.marcinchwedczuk.bzzz.javafx;
+package pl.marcinchwedczuk.bzzz;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.marcinchwedczuk.bzzz.javafx.util.JfxDialogs;
+import pl.marcinchwedczuk.bzzz.util.JfxDialogs;
 
 import java.io.IOException;
 

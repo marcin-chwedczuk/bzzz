@@ -1,8 +1,8 @@
-package pl.marcinchwedczuk.bzzz.javafx;
+package pl.marcinchwedczuk.bzzz;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import pl.marcinchwedczuk.bzzz.javafx.util.JfxDialogs;
+import pl.marcinchwedczuk.bzzz.util.JfxDialogs;
 
 public class GuiMainController {
     @FXML

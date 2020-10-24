@@ -1,21 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mycompany.app</groupId>
-    <artifactId>my-app</artifactId>
+    <artifactId>bzzz</artifactId>
+    <groupId>pl.marcinchwedczuk.bzzz</groupId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <url>https://github.com/marcin-chwedczuk/bzzz</url>
 
+    <modules>
+        <module>javafx-gui</module>
+        <module>simulator</module>
+    </modules>
+
     <properties>
-        <!--<maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>-->
         <maven.compiler.release>14</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -27,53 +38,37 @@
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-maven-plugin</artifactId>
                     <version>0.0.5</version>
-                    <configuration>
-                        <mainClass>pl.marcinchwedczuk.bzzz.javafx.App</mainClass>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
-
-        <!-- Break Maven convention and allow FXML files in source code dirs. -->
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
-    <dependencies>
-        <!-- APP DEPENDENCIES -->
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>14</version>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-controls</artifactId>
+                <version>15.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-fxml</artifactId>
+                <version>15.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>30.0-jre</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>14.0.2.1</version>
-            <type>pom</type>
-        </dependency>
+            <!-- TEST DEPENDENCIES -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.13.1</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>30.0-jre</version>
-        </dependency>
-
-        <!-- TEST DEPENDENCIES -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.1</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
 </project>
