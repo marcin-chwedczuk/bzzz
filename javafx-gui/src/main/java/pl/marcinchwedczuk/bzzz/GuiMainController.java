@@ -2,9 +2,9 @@ package pl.marcinchwedczuk.bzzz;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import pl.marcinchwedczuk.bzzz.jfxutil.JfxDialogs;
 import pl.marcinchwedczuk.bzzz.simulator.EventLoopSimulator;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
-import pl.marcinchwedczuk.bzzz.util.JfxDialogs;
 
 public class GuiMainController {
     private Simulator sim = new EventLoopSimulator();

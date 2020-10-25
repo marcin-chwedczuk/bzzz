@@ -227,16 +227,16 @@ public class SevenSegmentDisplayDriver extends BaseElement {
         }
 
         Nand6 mega = new Nand6(simulator, componentId.extend("mega"));
-        mega.input1().connectWith(bufLampTest);
+        mega.input1.connectWith(bufLampTest);
         {
             var inv = new Inverter(simulator, componentId.extend("mega-inv1"));
             inv.input().connectWith(rippleBlankingInputN);
-            inv.output().connectWith(mega.input2());
+            inv.output().connectWith(mega.input2);
         }
-        mega.input3().connectWith(m[8]);
-        mega.input4().connectWith(m[6]);
-        mega.input5().connectWith(m[4]);
-        mega.input6().connectWith(m[2]);
+        mega.input3.connectWith(m[8]);
+        mega.input4.connectWith(m[6]);
+        mega.input5.connectWith(m[4]);
+        mega.input6.connectWith(m[2]);
 
         Nand n1 = new Nand(simulator, componentId.extend("n1"));
         n1.input1().connectWith(input1);
@@ -245,7 +245,7 @@ public class SevenSegmentDisplayDriver extends BaseElement {
 
         Nand n2 = new Nand(simulator, componentId.extend("n2"));
         n2.input1().connectWith(n1.output());
-        n2.input2().connectWith(mega.output());
+        n2.input2().connectWith(mega.output);
         n2.output().connectWith(m[1]);
 
         Nand n3 = new Nand(simulator, componentId.extend("n3"));
@@ -255,7 +255,7 @@ public class SevenSegmentDisplayDriver extends BaseElement {
 
         Nand n4 = new Nand(simulator, componentId.extend("n4"));
         n4.input1().connectWith(n3.output());
-        n4.input2().connectWith(mega.output());
+        n4.input2().connectWith(mega.output);
         n4.output().connectWith(m[3]);
 
         Nand n5 = new Nand(simulator, componentId.extend("n5"));
@@ -265,7 +265,7 @@ public class SevenSegmentDisplayDriver extends BaseElement {
 
         Nand n6 = new Nand(simulator, componentId.extend("n6"));
         n6.input1().connectWith(n5.output());
-        n6.input2().connectWith(mega.output());
+        n6.input2().connectWith(mega.output);
         n6.output().connectWith(m[5]);
 
         Inverter n7 = new Inverter(simulator, componentId.extend("n7"));
@@ -274,7 +274,7 @@ public class SevenSegmentDisplayDriver extends BaseElement {
 
         Nand n8 = new Nand(simulator, componentId.extend("n8"));
         n8.input1().connectWith(n7.output());
-        n8.input2().connectWith(mega.output());
+        n8.input2().connectWith(mega.output);
         n8.output().connectWith(m[7]);
     }
 

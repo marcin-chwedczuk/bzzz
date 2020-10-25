@@ -61,6 +61,8 @@ public class CircuitBuilder {
         return new Nand3(simulator, componentId);
     }
 
+    public Nand6 nand6(ComponentId componentId) { return new Nand6(simulator, componentId); }
+
     public And and(ComponentId componentId) {
         return new And(simulator, componentId);
     }
@@ -79,6 +81,22 @@ public class CircuitBuilder {
 
     public And5 and5(ComponentId componentId) {
         return new And5(simulator, componentId);
+    }
+
+    public Nor nor(ComponentId componentId) {
+        return new Nor(simulator, componentId);
+    }
+
+    public Nor3 nor3(ComponentId componentId) {
+        return new Nor3(simulator, componentId);
+    }
+
+    public Nor4 nor4(ComponentId componentId) {
+        return new Nor4(simulator, componentId);
+    }
+
+    public Nor5 nor5(ComponentId componentId) {
+        return new Nor5(simulator, componentId);
     }
 
 }

@@ -72,6 +72,20 @@ public class TruthTable implements Iterable<TruthTableTestCase> {
         return fromFunction(5, states -> f.apply(states[0], states[1], states[2], states[3], states[4]));
     }
 
+    public static TruthTable fromBooleanFunction(HexaFunction<Boolean, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean> f) {
+        return fromFunction((wireState1, wireState2, wireState3, wireState4, wireState5, wireState6) -> LogicState.fromBoolean(
+                f.apply(wireState1.toTTL().isOne(),
+                        wireState2.toTTL().isOne(),
+                        wireState3.toTTL().isOne(),
+                        wireState4.toTTL().isOne(),
+                        wireState5.toTTL().isOne(),
+                        wireState6.toTTL().isOne())));
+    }
+
+    public static TruthTable fromFunction(HexaFunction<LogicState, LogicState, LogicState, LogicState, LogicState, LogicState, LogicState> f) {
+        return fromFunction(6, states -> f.apply(states[0], states[1], states[2], states[3], states[4], states[5]));
+    }
+
     public static TruthTable fromFunction(int numInputs, Function<LogicState[], LogicState> f) {
         var statesPerSingleInput = Set.of(LogicState.ZERO, LogicState.ONE, LogicState.NOT_CONNECTED);
         var statesPerAllInputs = Collections.nCopies(numInputs, statesPerSingleInput);

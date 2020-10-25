@@ -8,13 +8,13 @@ import pl.marcinchwedczuk.bzzz.simulator.Duration;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
 public class Nand6 extends BaseElement {
-    private final Wire input1;
-    private final Wire input2;
-    private final Wire input3;
-    private final Wire input4;
-    private final Wire input5;
-    private final Wire input6;
-    private final Wire output;
+    public final Wire input1;
+    public final Wire input2;
+    public final Wire input3;
+    public final Wire input4;
+    public final Wire input5;
+    public final Wire input6;
+    public final Wire output;
 
     @Override
     protected Duration propagationDelay() {
@@ -96,12 +96,4 @@ public class Nand6 extends BaseElement {
                 ? LogicState.ZERO
                 : LogicState.ONE;
     }
-
-    public Wire input1() { return input1; }
-    public Wire input2() { return input2; }
-    public Wire input3() { return input3; }
-    public Wire input4() { return input4; }
-    public Wire input5() { return input5; }
-    public Wire input6() { return input6; }
-    public Wire output() { return output; }
 }
