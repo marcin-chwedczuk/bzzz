@@ -1,0 +1,4 @@
+// This file will be put into resulting fat-jar.
+module bzzz.simulator {
+    exports pl.marcinchwedczuk.bzzz.simulator;
+}
