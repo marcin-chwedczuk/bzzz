@@ -2,8 +2,6 @@ package pl.marcinchwedczuk.bzzz.logger;
 
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 import pl.marcinchwedczuk.bzzz.simulator.ComponentType;
-import pl.marcinchwedczuk.bzzz.simulator.Simulator;
-import pl.marcinchwedczuk.bzzz.utils.Pipe;
 
 public class Logger {
     public static LogFilter filter = LogFilters.noFilter();

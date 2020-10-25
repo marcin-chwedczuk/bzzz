@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 import pl.marcinchwedczuk.bzzz.primitives.LogicState;
 import pl.marcinchwedczuk.bzzz.primitives.ShortCircuitDetectedException;
-import pl.marcinchwedczuk.bzzz.utils.X;
+import pl.marcinchwedczuk.bzzz.util.X;
 
 import java.util.Objects;
 

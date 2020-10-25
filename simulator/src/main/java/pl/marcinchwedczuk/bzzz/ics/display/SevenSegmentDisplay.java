@@ -4,7 +4,7 @@ import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
-import pl.marcinchwedczuk.bzzz.utils.X;
+import pl.marcinchwedczuk.bzzz.util.X;
 
 public class SevenSegmentDisplay extends BaseElement {
     private static final int[][] DISPLAY_MAP = new int[][] {

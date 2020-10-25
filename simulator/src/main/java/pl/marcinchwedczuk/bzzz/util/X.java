@@ -1,7 +1,11 @@
-package pl.marcinchwedczuk.bzzz.utils;
+package pl.marcinchwedczuk.bzzz.util;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import com.google.common.collect.Streams;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class X {
     public static int toInt(boolean b) {
@@ -21,4 +25,18 @@ public class X {
         return ImmutableSet.copyOf(
             Sets.difference(set, ImmutableSet.of(element)));
     }
+
+    public static <T> T[] defensiveCopy(T[] arr) {
+        return Arrays.copyOf(arr, arr.length);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <A,B,C,R> Stream<R> zip(Stream<A> a, Stream<B> b, Stream<C> c, TriFunction<A,B,C,R> f) {
+        return Streams.zip(
+            Streams.zip(a, b, (aElem, bElem) -> new Object[] { aElem, bElem }),
+            c,
+            (ab, cElem) -> f.apply((A)ab[0], (B)ab[1], cElem));
+    }
+
+
 }

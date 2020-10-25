@@ -7,7 +7,7 @@ import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.Duration;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
-public class AndN extends BaseElement {
+public class And1N1 extends BaseElement {
     public final Wire input1N;
     public final Wire input2;
     public final Wire output;
@@ -17,7 +17,7 @@ public class AndN extends BaseElement {
         return Duration.of(200);
     }
 
-    public AndN(Simulator simulator, ComponentId componentId) {
+    public And1N1(Simulator simulator, ComponentId componentId) {
         super(simulator, componentId);
 
         input1N = new Wire(simulator, componentId.inputPin(1));

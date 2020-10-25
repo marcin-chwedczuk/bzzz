@@ -66,19 +66,19 @@ public class FourBitSummator extends BaseElement {
 
         // Level Y
         var y1 = new Inverter(simulator, componentId.extend("y1"));
-        var y2 = new AndN(simulator, componentId.extend("y2"));
+        var y2 = new And1N1(simulator, componentId.extend("y2"));
         var y3 = new And(simulator, componentId.extend("y3"));
         var y4 = new Buffer(simulator, componentId.extend("y4"));
-        var y5 = new AndN(simulator, componentId.extend("y5"));
+        var y5 = new And1N1(simulator, componentId.extend("y5"));
         var y6 = new And3(simulator, componentId.extend("y6"));
         var y7 = new And(simulator, componentId.extend("y7"));
         var y8 = new Buffer(simulator, componentId.extend("y8"));
-        var y9 = new AndN(simulator, componentId.extend("y9"));
+        var y9 = new And1N1(simulator, componentId.extend("y9"));
         var y10 = new And4(simulator, componentId.extend("y10"));
         var y11 = new And3(simulator, componentId.extend("y11"));
         var y12 = new And(simulator, componentId.extend("y12"));
         var y13 = new Buffer(simulator, componentId.extend("y13"));
-        var y14 = new AndN(simulator, componentId.extend("y14"));
+        var y14 = new And1N1(simulator, componentId.extend("y14"));
         var y15 = new And5(simulator, componentId.extend("y15"));
         var y16 = new And4(simulator, componentId.extend("y16"));
         var y17 = new And3(simulator, componentId.extend("y17"));

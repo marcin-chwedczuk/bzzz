@@ -23,7 +23,6 @@ public abstract class BaseElement {
     public final ComponentId componentId() {
         return componentId;
     }
-
     public final ComponentType componentType() {
         return componentType;
     }
