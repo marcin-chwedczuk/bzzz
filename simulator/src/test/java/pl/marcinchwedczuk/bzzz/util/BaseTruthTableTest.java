@@ -24,11 +24,11 @@ public abstract class BaseTruthTableTest<T extends BaseElement> {
     protected abstract T createComponent(CircuitBuilder builder, ComponentId sut);
 
     protected Wire[] inputs(T component) {
-        return getFieldsMatching(component, "^input(\\d+)?N?$");
+        return getFieldsMatching(component, "^(input\\d*|enable)N?$");
     }
 
     protected Wire[] outputs(T component) {
-        return getFieldsMatching(component, "^output(\\d+)?N?$");
+        return getFieldsMatching(component, "^output\\d*N?$");
     }
 
     protected abstract TruthTable truthTable();
@@ -59,7 +59,8 @@ public abstract class BaseTruthTableTest<T extends BaseElement> {
 
         return Arrays.stream(fieldsArray)
                 .filter(f -> f.getName().matches(fieldNameRegex))
-                .sorted(comparing(Field::getName))
+                .sorted(comparing((Field f) -> inputTypeOrder(f))
+                        .thenComparing(Field::getName))
                 .map(f -> {
                     try {
                         return f.get(component);
@@ -69,5 +70,13 @@ public abstract class BaseTruthTableTest<T extends BaseElement> {
                 })
                 .map(value -> (Wire)value)
                 .toArray(Wire[]::new);
+    }
+
+    // order: inputs enable other
+    private static Integer inputTypeOrder(Field f) {
+        String fieldName = f.getName();
+        if (fieldName.startsWith("input")) return 0;
+        if (fieldName.startsWith("enable")) return 100;
+        return 200;
     }
 }

@@ -17,6 +17,15 @@ public class TruthTable implements Iterable<TruthTableTestCase> {
         return new TruthTableBuilder();
     }
 
+    public static TruthTable fromBooleanFunction(Function<Boolean, Boolean> f) {
+        return fromFunction((wireState1) -> LogicState.fromBoolean(
+                f.apply(wireState1.toTTL().isOne())));
+    }
+
+    public static TruthTable fromFunction(Function<LogicState, LogicState> f) {
+        return fromFunction(1, states -> f.apply(states[0]));
+    }
+
     public static TruthTable fromBooleanFunction(BiFunction<Boolean, Boolean, Boolean> f) {
         return fromFunction((wireState1, wireState2) -> LogicState.fromBoolean(
                 f.apply(wireState1.toTTL().isOne(),

@@ -1,6 +1,5 @@
 package pl.marcinchwedczuk.bzzz.ics.registers;
 
-import pl.marcinchwedczuk.bzzz.ics.flipflops.edgetriggered.DFlipFlop;
 import pl.marcinchwedczuk.bzzz.ics.flipflops.edgetriggered.DFlipFlopAlt;
 import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
@@ -75,9 +74,9 @@ public class FourBitRegister extends BaseElement {
             qNInv.input.connectWith(dff.qN);
 
             var triState = new TriStateBuffer(simulator, bitId.extend("tri-state-buff"));
-            outputs[i] = triState.output();
+            outputs[i] = triState.output;
             triState.input.connectWith(qNInv.output);
-            triState.enabledN.connectWith(outputControlN);
+            triState.enableN.connectWith(outputControlN);
 
             var a1 = new And(simulator, bitId.extend("and-1"));
             var a2 = new And(simulator, bitId.extend("and-2"));

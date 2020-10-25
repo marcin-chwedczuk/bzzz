@@ -33,12 +33,24 @@ public class CircuitBuilder {
         return s;
     }
 
+    public Buffer buffer(ComponentId componentId) {
+        return new Buffer(simulator, componentId);
+    }
+
     public Inverter inverter(String name) {
         return new Inverter(simulator, ComponentId.of(name));
     }
 
+    public Inverter inverter(ComponentId componentId) {
+        return new Inverter(simulator, componentId);
+    }
+
     public TriStateBuffer triStateBuffer(String name) {
         return new TriStateBuffer(simulator, ComponentId.of(name));
+    }
+
+    public TriStateBuffer triStateBuffer(ComponentId componentId) {
+        return new TriStateBuffer(simulator, componentId);
     }
 
     public Nand nand(ComponentId componentId) {
