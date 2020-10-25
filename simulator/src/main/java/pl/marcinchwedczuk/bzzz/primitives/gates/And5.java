@@ -56,7 +56,7 @@ public class And5 extends BaseElement {
         LogicState input2LS = input2.logicState();
         LogicState input3LS = input3.logicState();
         LogicState input4LS = input4.logicState();
-        LogicState input5LS = input4.logicState();
+        LogicState input5LS = input5.logicState();
 
         LogicState outputLS = ttlAnd(input1LS, input2LS, input3LS, input4LS, input5LS);
 
@@ -80,8 +80,4 @@ public class And5 extends BaseElement {
                 ? LogicState.ONE
                 : LogicState.ZERO;
     }
-
-    public Wire input1() { return input1; }
-    public Wire input2() { return input2; }
-    public Wire output() { return output; }
 }

@@ -18,17 +18,17 @@ import static pl.marcinchwedczuk.bzzz.primitives.LogicState.ONE;
 import static pl.marcinchwedczuk.bzzz.primitives.LogicState.ZERO;
 
 public abstract class BaseTruthTableTest<T extends BaseElement> {
-    private final Simulator simulator = new EventLoopSimulator();
-    private final CircuitBuilder builder = new CircuitBuilder(simulator);
+    protected final Simulator simulator = new EventLoopSimulator();
+    protected final CircuitBuilder builder = new CircuitBuilder(simulator);
 
     protected abstract T createComponent(CircuitBuilder builder, ComponentId sut);
 
     protected Wire[] inputs(T component) {
-        return getFieldsMatching(component, "^input(\\d+)?$");
+        return getFieldsMatching(component, "^input(\\d+)?N?$");
     }
 
     protected Wire[] outputs(T component) {
-        return getFieldsMatching(component, "^output(\\d+)?$");
+        return getFieldsMatching(component, "^output(\\d+)?N?$");
     }
 
     protected abstract TruthTable truthTable();
