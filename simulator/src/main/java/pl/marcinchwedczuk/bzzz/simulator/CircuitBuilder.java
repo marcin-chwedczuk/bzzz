@@ -99,4 +99,11 @@ public class CircuitBuilder {
         return new Nor5(simulator, componentId);
     }
 
+    public Or or(ComponentId componentId) {
+        return new Or(simulator, componentId);
+    }
+
+    public Xor xor(ComponentId componentId) {
+        return new Xor(simulator, componentId);
+    }
 }

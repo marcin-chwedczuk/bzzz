@@ -105,7 +105,7 @@ public class SevenSegmentDisplayDriver extends BaseElement {
 
         // Output C
         {
-            Nor2 nor = new Nor2(simulator, componentId.extend("c-nor"));
+            Nor nor = new Nor(simulator, componentId.extend("c-nor"));
             nor.output.connectWith(nots[2].input());
 
             And a1 = new And(simulator, componentId.extend("c-and1"));
@@ -150,7 +150,7 @@ public class SevenSegmentDisplayDriver extends BaseElement {
 
         // Output E
         {
-            Nor2 nor = new Nor2(simulator, componentId.extend("e-nor"));
+            Nor nor = new Nor(simulator, componentId.extend("e-nor"));
             nor.output.connectWith(nots[4].input());
 
             And a1 = new And(simulator, componentId.extend("e-and1"));
@@ -192,7 +192,7 @@ public class SevenSegmentDisplayDriver extends BaseElement {
 
         // Output G
         {
-            Nor2 nor = new Nor2(simulator, componentId.extend("g-nor"));
+            Nor nor = new Nor(simulator, componentId.extend("g-nor"));
             nor.output.connectWith(nots[6].input());
 
             And3 a1 = new And3(simulator, componentId.extend("g-and1"));
