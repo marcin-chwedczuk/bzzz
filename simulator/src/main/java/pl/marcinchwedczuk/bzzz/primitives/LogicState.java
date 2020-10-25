@@ -3,6 +3,10 @@ package pl.marcinchwedczuk.bzzz.primitives;
 public enum LogicState {
     ONE, ZERO, NOT_CONNECTED;
 
+    public static LogicState fromBoolean(boolean b) {
+        return b ? ONE : ZERO;
+    }
+
     public boolean isZero() {
         return this == ZERO;
     }

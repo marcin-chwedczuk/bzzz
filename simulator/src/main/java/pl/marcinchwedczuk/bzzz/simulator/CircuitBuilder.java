@@ -1,10 +1,7 @@
 package pl.marcinchwedczuk.bzzz.simulator;
 
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
-import pl.marcinchwedczuk.bzzz.primitives.gates.Inverter;
-import pl.marcinchwedczuk.bzzz.primitives.gates.Nand;
-import pl.marcinchwedczuk.bzzz.primitives.gates.Nand3;
-import pl.marcinchwedczuk.bzzz.primitives.gates.TriStateBuffer;
+import pl.marcinchwedczuk.bzzz.primitives.gates.*;
 import pl.marcinchwedczuk.bzzz.primitives.passives.Probe;
 import pl.marcinchwedczuk.bzzz.primitives.passives.Switch;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
@@ -51,4 +48,25 @@ public class CircuitBuilder {
     public Nand3 nand3(ComponentId componentId) {
         return new Nand3(simulator, componentId);
     }
+
+    public And and(ComponentId componentId) {
+        return new And(simulator, componentId);
+    }
+
+    public And1N1 and1N1(ComponentId componentId) {
+        return new And1N1(simulator, componentId);
+    }
+
+    public And3 and3(ComponentId componentId) {
+        return new And3(simulator, componentId);
+    }
+
+    public And4 and4(ComponentId componentId) {
+        return new And4(simulator, componentId);
+    }
+
+    public And5 and5(ComponentId componentId) {
+        return new And5(simulator, componentId);
+    }
+
 }

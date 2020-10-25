@@ -37,6 +37,9 @@ public abstract class BaseTruthTableTest<T extends BaseElement> {
     public void test() {
         var component = createComponent(builder, ComponentId.of("sut"));
 
+        // Stabilize component state
+        simulator.run("stabilize-state");
+
         var inputs = inputs(component);
         var outputs = outputs(component);
 
