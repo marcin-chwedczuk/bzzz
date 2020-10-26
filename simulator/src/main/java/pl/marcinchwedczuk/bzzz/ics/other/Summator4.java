@@ -6,7 +6,12 @@ import pl.marcinchwedczuk.bzzz.primitives.gates.*;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.Simulator;
 
-public class FourBitSummator extends BaseElement {
+/**
+ * 4-bit Summator.
+ *
+ * A4/B4 is Most Significant Bit.
+ */
+public class Summator4 extends BaseElement {
     public final Wire carryIn;
 
     public final Wire A1;
@@ -26,7 +31,7 @@ public class FourBitSummator extends BaseElement {
 
     public final Wire carryOut;
 
-    public FourBitSummator(Simulator simulator, ComponentId componentId) {
+    public Summator4(Simulator simulator, ComponentId componentId) {
         super(simulator, componentId);
 
         // Levels X Y Z W

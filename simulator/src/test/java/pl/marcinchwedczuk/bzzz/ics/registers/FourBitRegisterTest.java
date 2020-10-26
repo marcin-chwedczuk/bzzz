@@ -4,7 +4,7 @@ import org.junit.Test;
 import pl.marcinchwedczuk.bzzz.ics.display.MultiSegmentPrinter;
 import pl.marcinchwedczuk.bzzz.ics.display.SevenSegmentDisplay;
 import pl.marcinchwedczuk.bzzz.ics.display.SevenSegmentDisplayDriver;
-import pl.marcinchwedczuk.bzzz.ics.other.FourBitSummator;
+import pl.marcinchwedczuk.bzzz.ics.other.Summator4;
 import pl.marcinchwedczuk.bzzz.logger.LogFilters;
 import pl.marcinchwedczuk.bzzz.logger.Logger;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
@@ -23,7 +23,7 @@ public class FourBitRegisterTest {
     @Test public void foo() throws InterruptedException {
         var test = ComponentId.of("test");
         var r4 = new FourBitRegister(simulator, ComponentId.of("r4"));
-        var sum4 = new FourBitSummator(simulator, ComponentId.of("sum4"));
+        var sum4 = new Summator4(simulator, ComponentId.of("sum4"));
 
         Logger.filter = LogFilters.logNothing();
 

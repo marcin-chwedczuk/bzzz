@@ -3,6 +3,7 @@ package pl.marcinchwedczuk.bzzz.util;
 import org.junit.Test;
 import pl.marcinchwedczuk.bzzz.primitives.BaseElement;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
+import pl.marcinchwedczuk.bzzz.primitives.LogicState;
 import pl.marcinchwedczuk.bzzz.primitives.wires.Wire;
 import pl.marcinchwedczuk.bzzz.simulator.CircuitBuilder;
 import pl.marcinchwedczuk.bzzz.simulator.EventLoopSimulator;
@@ -78,5 +79,18 @@ public abstract class BaseTruthTableTest<T extends BaseElement> {
         if (fieldName.startsWith("input")) return 0;
         if (fieldName.startsWith("enable")) return 100;
         return 200;
+    }
+
+    protected static LogicState[] bitsToLogicStates(int numBits, long value) {
+        var arr = new LogicState[numBits];
+
+        for (int i = 0; i < numBits; i++) {
+            int bitPos = numBits-1 - i;
+            arr[i] = (value & (1 << bitPos)) != 0
+                    ? ONE
+                    : ZERO;
+        }
+
+        return arr;
     }
 }

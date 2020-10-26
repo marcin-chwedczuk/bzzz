@@ -1,5 +1,6 @@
 package pl.marcinchwedczuk.bzzz.simulator;
 
+import pl.marcinchwedczuk.bzzz.ics.other.Summator4;
 import pl.marcinchwedczuk.bzzz.primitives.ComponentId;
 import pl.marcinchwedczuk.bzzz.primitives.gates.*;
 import pl.marcinchwedczuk.bzzz.primitives.passives.Probe;
@@ -105,5 +106,9 @@ public class CircuitBuilder {
 
     public Xor xor(ComponentId componentId) {
         return new Xor(simulator, componentId);
+    }
+
+    public Summator4 summator4(ComponentId componentId) {
+        return new Summator4(simulator, componentId);
     }
 }
