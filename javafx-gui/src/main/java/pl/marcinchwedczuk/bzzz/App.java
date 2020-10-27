@@ -23,7 +23,7 @@ public class App extends Application {
 
         stage.setTitle("bzzz Simulator");
         stage.setScene(scene);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.show();
     }
 

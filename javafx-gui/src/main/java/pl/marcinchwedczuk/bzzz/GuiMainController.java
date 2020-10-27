@@ -1,8 +1,8 @@
 package pl.marcinchwedczuk.bzzz;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.marcinchwedczuk.bzzz.jfxutil.JfxDialogs;
@@ -28,7 +28,18 @@ public class GuiMainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        var mcDigit = new mcSevenSegmentDigit();
-        root.getChildren().add(mcDigit);
+        var mcDigit = new SevenSegmentDigit();
+        //mcDigit.setMinWidth(100);
+        //mcDigit.setMinHeight(800);
+
+
+        Led control = new Led();
+        control.setPrefWidth(200);
+        control.setPrefHeight(200);
+
+        StackPane pane = new StackPane();
+        pane.getChildren().setAll(mcDigit);
+        root.getChildren().add(pane);
+        // control.setBlinking(true);
     }
 }
