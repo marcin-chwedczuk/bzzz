@@ -1,25 +1,25 @@
 package pl.marcinchwedczuk.bzzz;
 
-import javafx.scene.Parent;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Shape;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 public class SevenSegmentDigit extends Region {
 
     private final static double ORIGINAL_WIDTH = 450;
     private final static double ORIGINAL_HEIGHT = 670;
+
+    private ObjectProperty<Color> lightColor = new SimpleObjectProperty<>(
+            this, "lightColor", Color.web("#ed3237")
+    );
+
+    private ObjectProperty<Color> darkColor = new SimpleObjectProperty<>(
+            this, "darkColor", Color.web("#441f11")
+    );
 
     private Canvas canvas;
     private GraphicsContext ctx;
@@ -36,9 +36,10 @@ public class SevenSegmentDigit extends Region {
 
         arc(arcCenterX, arcCenterY, arcStartX, arcStartY, arcStopX, arcStopY);
 
-        polygon(arcCenterX, arcCenterY,
+        // -0.5 to remove artifacts
+        polygon(arcCenterX-0.5, arcCenterY,
                 //arcStopX, arcStopY,
-                arcStartX, arcStartY,
+                arcStartX-0.5, arcStartY,
                 388, 1,
                 353, 74);
     }
@@ -49,8 +50,8 @@ public class SevenSegmentDigit extends Region {
         double stopX = 407, stopY = 1;
 
         arc(arcCenterX, arcCenterY, startX, startY, stopX, stopY);
-        polygon(arcCenterX, arcCenterY,
-                startX, startY,
+        polygon(arcCenterX, arcCenterY - 0.5,
+                startX, startY - 0.5,
                 423, 307,
                 403, 326,
                 353, 270);
@@ -62,8 +63,8 @@ public class SevenSegmentDigit extends Region {
         double stopX = 392, stopY = 622;
 
         arc(arcCenterX, arcCenterY, startX, startY, stopX, stopY);
-        polygon(arcCenterX, arcCenterY,
-                stopX, stopY,
+        polygon(arcCenterX, arcCenterY + 0.5,
+                stopX, stopY + 0.5,
                 417, 364,
                 401, 345,
                 340, 402
@@ -76,8 +77,8 @@ public class SevenSegmentDigit extends Region {
         double stopX = 42, stopY = 669;
 
         arc(arcCenterX, arcCenterY, startX, startY, stopX, stopY);
-        polygon(arcCenterX, arcCenterY,
-                stopX, stopY,
+        polygon(arcCenterX - 0.5, arcCenterY,
+                stopX - 0.5, stopY,
                 321, 669,
                 301, 596
         );
@@ -134,16 +135,6 @@ public class SevenSegmentDigit extends Region {
     }
 
     private void resize() {
-        // TODO: Preserve aspect ratio
-        double w = getWidth();
-        double h = getHeight();
-
-        double scaleX = w / ORIGINAL_WIDTH;
-        double scaleY = h / ORIGINAL_HEIGHT;
-
-        canvas.setScaleX(scaleX);
-        canvas.setScaleY(scaleY);
-
         draw();
     }
 
@@ -155,14 +146,31 @@ public class SevenSegmentDigit extends Region {
         // Clean control area
         canvas.setWidth(width);
         canvas.setHeight(height);
-        ctx.setFill(Color.AQUA);
+        //canvas.setScaleY(1.0); canvas.setScaleX(1.0);
+        ctx.setFill(Color.BLACK);
         ctx.fillRect(0, 0, width, height);
         //ctx.clearRect(0, 0, width, height);
 
         // Setup aspect ration
-        double aspect = ORIGINAL_WIDTH / ORIGINAL_HEIGHT;
-        double finalWidth = width;
-        double finalHeight = 1/aspect * finalWidth;
+        double originalAspect = ORIGINAL_WIDTH / ORIGINAL_HEIGHT;
+        double canvasAspect = width / height;
+
+        double finalWidth, finalHeight;
+        if (originalAspect >= canvasAspect) {
+            finalWidth = width;
+            finalHeight = finalWidth / originalAspect;
+        } else {
+            finalHeight = height;
+            finalWidth = finalHeight * originalAspect;
+        }
+
+        // canvas.setScaleX(finalWidth / (2*ORIGINAL_WIDTH));
+        //canvas.setScaleY(finalHeight / (2*ORIGINAL_HEIGHT));
+
+        ctx.save();
+        ctx.scale(finalWidth / ORIGINAL_WIDTH, finalHeight / ORIGINAL_HEIGHT);
+        ctx.setFill(lightColor.get());
+        ctx.setStroke(lightColor.get());
 
         // Draw digit
         drawSegmentA();
@@ -171,7 +179,12 @@ public class SevenSegmentDigit extends Region {
         drawSegmentD();
         drawSegmentE();
         drawSegmentF();
+
+        ctx.setFill(darkColor.get());
+        ctx.setStroke(darkColor.get());
         drawSegmentG();
+
+        ctx.restore();
     }
 
     // Center + 2 points counter-clock wise
@@ -183,7 +196,6 @@ public class SevenSegmentDigit extends Region {
         double startAngle = Math.toDegrees(Math.atan2(-(arcStartY - arcCenterY), arcStartX - arcCenterX));
         double stopAngle = Math.toDegrees(Math.atan2(-(arcStopY - arcCenterY), arcStopX - arcCenterX));
 
-        ctx.setFill(Color.RED);
         ctx.fillArc(arcCenterX-arcR, arcCenterY-arcR,
                 arcR*2, arcR*2,
                 startAngle, stopAngle - startAngle,
@@ -191,8 +203,6 @@ public class SevenSegmentDigit extends Region {
     }
 
     private void polygon(double... points) {
-        ctx.setFill(Color.GREEN);
-
         double[] xs = new double[points.length / 2];
         double[] ys = new double[points.length / 2];
 
